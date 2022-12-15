@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./login.scss";
 import { Link } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
@@ -15,8 +15,12 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
   const [values, setValues] = React.useState({
     password: "",
     showPassword: false,
@@ -37,6 +41,27 @@ const Login = () => {
     event.preventDefault();
   };
 
+  const userLogin = (e) => {
+    e.preventDefault();
+    const data = {
+      email: email,
+      password: values.password,
+    };
+    axios
+      .post("/users/login", data)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          toast.success("Login Successful");
+        } else {
+          toast.error("Login Unsuccessful");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="login-container">
       <div className="login-card">
@@ -53,6 +78,10 @@ const Login = () => {
                     <FaUserAlt />
                   </InputAdornment>
                 }
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
@@ -78,7 +107,7 @@ const Login = () => {
                 }
               />
             </FormControl>
-            <button className="btn-login">
+            <button className="btn-login" onClick={userLogin}>
               Login
               <BiLogIn className="fs-2 ms-2" />
             </button>

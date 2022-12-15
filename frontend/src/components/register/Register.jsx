@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./register.scss";
 import { Link } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
@@ -15,8 +15,14 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 const Register = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+
   const [values, setValues] = React.useState({
     password: "",
     password2: "",
@@ -46,6 +52,35 @@ const Register = () => {
     event.preventDefault();
   };
 
+  const registerUser = (e) => {
+    e.preventDefault();
+    if (values.password !== values.password2) {
+      toast.error("Confirm Password is not same with Password");
+      return;
+    }
+
+    const data = {
+      email: email,
+      username: username,
+      name: name,
+      password: values.password,
+    };
+
+    axios
+      .post("/users/register", data)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 201) {
+          toast.success("Register Successful");
+        } else {
+          toast.error("Register Unsuccessful");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="register-container">
       <div className="register-card">
@@ -62,6 +97,10 @@ const Register = () => {
                     <FaUserAlt />
                   </InputAdornment>
                 }
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
@@ -75,12 +114,15 @@ const Register = () => {
                     <FaUserAlt />
                   </InputAdornment>
                 }
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
               />
             </FormControl>
+
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
-              <InputLabel htmlFor="filled-adornment-password">
-                Firstname
-              </InputLabel>
+              <InputLabel htmlFor="filled-adornment-password">Name</InputLabel>
               <FilledInput
                 id="filled-adornment-password"
                 endAdornment={
@@ -88,19 +130,10 @@ const Register = () => {
                     <FaUserAlt />
                   </InputAdornment>
                 }
-              />
-            </FormControl>
-            <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
-              <InputLabel htmlFor="filled-adornment-password">
-                Lastname
-              </InputLabel>
-              <FilledInput
-                id="filled-adornment-password"
-                endAdornment={
-                  <InputAdornment position="end">
-                    <FaUserAlt />
-                  </InputAdornment>
-                }
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
               />
             </FormControl>
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
@@ -153,7 +186,9 @@ const Register = () => {
                 }
               />
             </FormControl>
-            <button className="btn-register">Register</button>
+            <button className="btn-register" onClick={registerUser}>
+              Register
+            </button>
           </form>
           <div className="login-part my-5">
             <p>Already have an account?</p>

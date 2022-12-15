@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema(
     userType: {
       type: String,
       required: true,
-      default: "Customer",
+      default: "Admin",
     },
   },
   {
