@@ -29,10 +29,10 @@ const Header = () => {
         <div className="menu__line  "></div>
       </div>
       <nav className={`nav ${openMenu ? "nav--slide" : ""}`}>
-        <Link to="/" className="nav__links ">
+        {/* <Link to="/" className="nav__links ">
           Home
         </Link>
-        <Link className="nav__links">About</Link>
+        <Link className="nav__links">About</Link> */}
         {localStorage.getItem("token") ? (
           <Link className="nav__btn nav__links" to="login" onClick={logout}>
             Log out

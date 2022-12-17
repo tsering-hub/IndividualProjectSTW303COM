@@ -52,6 +52,8 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          localStorage.setItem("userType", res.data.usertype);
+          localStorage.setItem("token", res.data.token);
           toast.success("Login Successful");
         } else {
           toast.error("Login Unsuccessful");

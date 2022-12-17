@@ -4,12 +4,30 @@ import Header from "./components/layout/Header";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminHeader from "./components/layout/AdminHeader";
+import AdminBody from "./components/layout/AdminBody";
 function App() {
+  var mainbody;
+  if (localStorage.getItem("userType") !== "Admin") {
+    mainbody = (
+      <>
+        <Header />
+        <Body />
+      </>
+    );
+  } else if (localStorage.getItem("userType") === "Admin") {
+    mainbody = (
+      <>
+        <AdminHeader>
+          <AdminBody />
+        </AdminHeader>
+      </>
+    );
+  }
   return (
     <>
       <BrowserRouter>
-        {localStorage.getItem("userType") !== "admin" && <Header />}
-        <Body />
+        <>{mainbody}</>
       </BrowserRouter>
       <ToastContainer></ToastContainer>
     </>
