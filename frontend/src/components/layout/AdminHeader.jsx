@@ -10,6 +10,7 @@ import {
   FaShoppingBag,
   FaThList,
 } from "react-icons/fa";
+import { MdFastfood } from "react-icons/md";
 import { ImExit } from "react-icons/im";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -18,9 +19,14 @@ const AdminHeader = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/dashboard",
+      path: "/",
       name: "Dashboard",
       icon: <FaTh />,
+    },
+    {
+      path: "/Foods",
+      name: "Foods",
+      icon: <MdFastfood />,
     },
     {
       path: "/about",

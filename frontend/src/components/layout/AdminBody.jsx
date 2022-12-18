@@ -9,7 +9,7 @@ const AdminBody = () => {
   return (
     <>
       <Routes>
-        <Route path="/dashboard" element={<DashboardAdmin />} />
+        <Route path="/" element={<DashboardAdmin />} />
       </Routes>
     </>
   );
