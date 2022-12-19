@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Fooditems = require("../models/fooditemsModel");
 
 // @desc Adding New Food Item
-// @route /fooditems
+// @route /fooditems/add
 // @access Private Admin
 const addFooditems = asyncHandler(async (req, res) => {
   // Validation file formate
@@ -51,6 +51,23 @@ const addFooditems = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get Food items
+// @route /fooditems/getbyadmin
+// @access Private Admin
+const GetFooditemsByAdmin = asyncHandler(async (req, res) => {
+  const foods = await Fooditems.find();
+  if (foods) {
+    res.status(200).json({
+      success: true,
+      data: foods,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Food not Found");
+  }
+});
+
 module.exports = {
   addFooditems,
+  GetFooditemsByAdmin,
 };
