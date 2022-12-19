@@ -87,13 +87,13 @@ const loginUser = asyncHandler(async (req, res) => {
 // @access Private
 const getMe = asyncHandler(async (req, res) => {
   res.status(200).json({
-    user: req.user,
+    user: req.adminInfo,
   });
 });
 
 // Generate token
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+  return jwt.sign({ userId: id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
 };

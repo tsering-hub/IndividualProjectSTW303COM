@@ -16,14 +16,10 @@ app.use(
     extended: false,
   })
 );
-app.get("/", (req, res) => {
-  res.status(200).json({
-    msg: "Hellos",
-  });
-});
 
 // routes
 app.use("/users", require("./routes/userRoutes"));
+app.use("/fooditems", require("./routes/fooditemsRoutes"));
 
 app.use(errorHandler);
 

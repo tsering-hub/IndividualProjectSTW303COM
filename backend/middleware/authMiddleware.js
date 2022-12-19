@@ -1,35 +1,56 @@
 const jwt = require("jsonwebtoken");
-const asyncHandler = require("express-async-handler");
+const user = require("../models/userModel");
 
-const User = require("../models/userModel");
-
-const protect = asyncHandler(async (req, res, next) => {
-  let token;
-
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    try {
-      // Get token from header
-      token = req.headers.authorization.split(" ")[1];
-      //   Verify the token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      //   get user from token
-      req.user = await User.findById(decoded.id).select("-password");
-      next();
-    } catch (error) {
-      console.log(error);
-      res.status(401);
-      throw new Error("Not authorized");
-    }
+// This Is Guard For Customer...
+module.exports.userGuard = (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(data);
+    user
+      .findOne({
+        $and: [
+          { _id: data.userId },
+          {
+            userType: "User",
+          },
+        ],
+      })
+      .then((udata) => {
+        req.userInfo = udata;
+        next();
+      })
+      .catch((e) => {
+        res.json({ msg: "Invalid Token" });
+      });
+  } catch (e) {
+    res.json({ msg: "Invalid Token" });
   }
-  if (!token) {
-    res.status(401);
-    throw new Error("Not authorized");
-  }
-});
+};
 
-module.exports = {
-  protect,
+// This Is Guard For Admin...
+module.exports.adminGuard = (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(data);
+    user
+      .findOne({
+        $and: [
+          { _id: data.userId },
+          {
+            userType: "Admin",
+          },
+        ],
+      })
+      .then((adata) => {
+        req.adminInfo = adata;
+        next();
+      })
+      .catch((e) => {
+        res.json({ msg: "Invalid Token" });
+      });
+  } catch (e) {
+    res.json({ msg: "Invalid Token" });
+  }
 };
