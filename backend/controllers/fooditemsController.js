@@ -122,7 +122,7 @@ const updateFooditems = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Get Food items
+// @desc delete Food item
 // @route /fooditems/delete/:id
 // @access Private Admin
 const deleteFooditem = asyncHandler(async (req, res) => {

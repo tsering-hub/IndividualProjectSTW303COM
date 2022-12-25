@@ -29,8 +29,8 @@ const AdminHeader = ({ children }) => {
       icon: <MdFastfood />,
     },
     {
-      path: "/about",
-      name: "About",
+      path: "/chefpage",
+      name: "Chef",
       icon: <FaUserAlt />,
     },
     {

@@ -85,6 +85,60 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Add New Chef
+// @route /users/addchefaccount
+// @access Private Admin
+const addChefAccount = asyncHandler(async (req, res) => {
+  const { username, name, email, password } = req.body;
+
+  // Validation
+  if (!username || !name || !email || !password) {
+    res.status(400);
+    throw new Error("Please include all fields");
+  }
+
+  // find if user already exists
+  const userEmailExists = await User.findOne({
+    email,
+  });
+
+  if (userEmailExists) {
+    res.status(400);
+    throw new Error("Email already exists");
+  }
+
+  const usernameExists = await User.findOne({
+    username,
+  });
+
+  if (usernameExists) {
+    res.status(400);
+    throw new Error("Username already exists");
+  }
+
+  // Hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  // Create User
+  const user = await User.create({
+    username,
+    name,
+    email,
+    password: hashPassword,
+    userType: "Chef",
+  });
+
+  if (user) {
+    res.status(201).json({
+      msg: "Chef Account Created Successfully",
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
+});
+
 // @desc Get Me
 // @route /users/me
 // @access Private
@@ -105,4 +159,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  addChefAccount,
 };
