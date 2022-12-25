@@ -11,7 +11,7 @@ const Header = () => {
   };
   const logout = () => {
     localStorage.clear();
-    window.location.replace("/login");
+    window.location.replace("/");
   };
   return (
     <div className="header">
@@ -34,11 +34,11 @@ const Header = () => {
         </Link>
         <Link className="nav__links">About</Link> */}
         {localStorage.getItem("token") ? (
-          <Link className="nav__btn nav__links" to="login" onClick={logout}>
+          <Link className="nav__btn nav__links" to="/" onClick={logout}>
             Log out
           </Link>
         ) : (
-          <Link className="nav__btn nav__links" to="login">
+          <Link className="nav__btn nav__links" to="/">
             Login
           </Link>
         )}

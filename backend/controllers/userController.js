@@ -76,6 +76,9 @@ const loginUser = asyncHandler(async (req, res) => {
       usertype: user.userType,
       token: generateToken(user._id),
     });
+  } else if (user) {
+    res.status(401);
+    throw new Error("Incorrect Password");
   } else {
     res.status(401);
     throw new Error("Invalid Credentials");

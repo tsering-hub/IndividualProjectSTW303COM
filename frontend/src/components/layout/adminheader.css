@@ -20,7 +20,7 @@ main {
 
 .sidebar {
   background: #f0f0f0;
-  color: rgb(34, 172, 27);
+  color: #3f50b5;
   height: 100vh;
   width: 200px;
   transition: all 0.5s;
@@ -52,13 +52,13 @@ main {
 }
 
 .link:hover {
-  background: rgb(105, 141, 57);
+  background: #5d669c;
   color: #fff;
   transition: all 0.5s;
 }
 
 .active {
-  background: rgb(73, 128, 0);
+  background: #3f50b5;
   color: #fff;
 }
 
@@ -71,10 +71,10 @@ main {
   font-weight: 600;
   font-size: 20px;
   background-color: #fff;
-  border: 2px solid #dd7230;
+  border: 2px solid #3f50b5;
   border-radius: 13px;
   transition: all 0.3s;
-  color: #dd7230;
+  color: #3f50b5;
   padding-top: 5px;
   padding-bottom: 5px;
   margin-left: 2px;
@@ -83,5 +83,5 @@ main {
 
 .logout-btn:hover {
   color: #fff;
-  background-color: #dd7230;
+  background-color: #3f50b5;
 }

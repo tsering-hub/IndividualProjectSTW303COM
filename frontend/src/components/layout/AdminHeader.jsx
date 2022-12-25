@@ -24,7 +24,7 @@ const AdminHeader = ({ children }) => {
       icon: <FaTh />,
     },
     {
-      path: "/Foods",
+      path: "/fooditems",
       name: "Foods",
       icon: <MdFastfood />,
     },
@@ -57,7 +57,7 @@ const AdminHeader = ({ children }) => {
 
   const logout = () => {
     localStorage.clear();
-    window.location.replace("/login");
+    window.location.replace("/");
   };
   return (
     <div className="admin-dashboardcontainer">
@@ -91,7 +91,7 @@ const AdminHeader = ({ children }) => {
         ))}
         <Link
           className="logout-btn mt-5 d-flex justify-content-center align-items-center"
-          to="login"
+          to="/"
           onClick={logout}
         >
           <ImExit></ImExit>

@@ -19,7 +19,7 @@
   border-radius: 20px;
   padding: 20px;
   margin: 10px;
-  min-width: 30%;
+  width: 200px;
   position: relative;
   @media (max-width: 800px) {
     padding: 10px;
@@ -40,7 +40,7 @@
       color: rgb(120, 114, 114);
       transition: all 0.2s;
       &:hover {
-        color: #ff6363;
+        color: #3f50b5;
         transform: translateX(2px);
       }
     }
@@ -54,7 +54,7 @@
     height: 50px;
     position: absolute;
     top: -20px;
-    background-color: #ffa163;
+    background-color: #3f50b5;
   }
   &__count {
     font-weight: 700;

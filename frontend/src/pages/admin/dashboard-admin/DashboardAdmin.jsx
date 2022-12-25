@@ -140,7 +140,7 @@ const DashboardCard = ({ heading, icon, count, link }) => {
       <div className="dash-card__icon">
         <img className="img-fluid" src={icon} alt={heading} />
       </div>
-      <p className="dash-card__count">
+      <p className="dash-card__count d-flex justify-content-between">
         {`${heading === "sales" ? "Rs. " : ""}`}
         {count}
         <Link to={link}>

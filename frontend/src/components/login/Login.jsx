@@ -61,7 +61,8 @@ const Login = () => {
         }
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response.data.message);
+        toast.error(e.response.data.message);
       });
   };
 
@@ -115,13 +116,13 @@ const Login = () => {
               <BiLogIn className="fs-2 ms-2" />
             </button>
           </form>
-          <div className="login-create my-5">
+          {/* <div className="login-create my-5">
             <p>Create an account?</p>
 
             <Link className="signup-link" to="/register">
               SignUp
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

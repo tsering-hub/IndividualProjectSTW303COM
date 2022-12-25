@@ -13,14 +13,12 @@ const fooditemsSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    category: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
-    preparingtime: {
+    category: {
       type: String,
+      required: true,
+    },
+    preparingtime: {
+      type: Number,
       required: [true, "Please add a preparing time"],
     },
     price: {

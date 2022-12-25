@@ -67,7 +67,80 @@ const GetFooditemsByAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Updating Food Item
+// @route /fooditems/update
+// @access Private Admin
+const updateFooditems = asyncHandler(async (req, res) => {
+  const { id, name, desc, category, preparingtime, price, stock } = req.body;
+
+  // find if food item already exists
+  const foodExists = await Fooditems.findOne({
+    name,
+  });
+
+  if (foodExists) {
+    res.status(400);
+    throw new Error("Food Item already exists");
+  }
+
+  var food;
+  // Update Food Item
+  if (req.file == undefined) {
+    food = await Fooditems.updateOne(
+      { _id: id },
+      {
+        name: name,
+        desc: desc,
+        category: category,
+        preparingtime: preparingtime,
+        price: price,
+        stock: stock,
+      }
+    );
+  } else {
+    food = await Fooditems.updateOne(
+      { _id: id },
+      {
+        food_pic: req.file.filename,
+        name: name,
+        desc: desc,
+        category: category,
+        preparingtime: preparingtime,
+        price: price,
+        stock: stock,
+      }
+    );
+  }
+
+  if (food !== null) {
+    res.status(201).json({
+      msg: "Food Updated successfully",
+    });
+  } else {
+    res.status(400);
+    throw new Error("Food not Updated");
+  }
+});
+
+// @desc Get Food items
+// @route /fooditems/delete/:id
+// @access Private Admin
+const deleteFooditem = asyncHandler(async (req, res) => {
+  const fooddelete = await Fooditems.deleteOne({ _id: req.params.id });
+
+  if (fooddelete) {
+    res.status(200).json({
+      msg: "Food Deleted successfully",
+    });
+  } else {
+    res.status(400);
+    throw new Error("Something Went Wrong, Please Try Again!!!");
+  }
+});
+
 module.exports = {
   addFooditems,
   GetFooditemsByAdmin,
+  updateFooditems,
+  deleteFooditem,
 };
