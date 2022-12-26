@@ -3,41 +3,54 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FaUserAlt } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import AddBoxRounded from "@mui/icons-material/AddBoxRounded";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import AddChef from "../../../components/addchef/AddChef";
+import { BsTrashFill } from "react-icons/bs";
+const config = {
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  },
+};
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 90,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+  { field: "username", headerName: "Username", width: 130 },
+  { field: "name", headerName: "Name", width: 130 },
+  { field: "email", headerName: "Email", width: 130 },
+  { field: "contactno", headerName: "Contact Number", width: 130 },
+  { field: "gender", headerName: "Gender", width: 130 },
+  { field: "dob", headerName: "Date Of Birth", width: 130 },
 ];
 
 const Chefpage = () => {
+  const [chefs, setChefs] = useState([]);
+
+  const style2 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "60%",
+    bgcolor: "background.paper",
+    borderRadius: "10px",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  // add chefs
+  const [openadd, setOpenadd] = React.useState(false);
+  const handleOpenadd = () => setOpenadd(true);
+  const handleCloseadd = () => setOpenadd(false);
+
+  useEffect(() => {
+    axios.get("/users/getchefs", config).then((res) => {
+      setChefs(res.data.chefs);
+    });
+  }, []);
+
   return (
     <div>
       <div className="d-flex justify-content-between my-3">
@@ -45,18 +58,42 @@ const Chefpage = () => {
           <FaUserAlt className="mb-2 me-2 fs-4" />
           <h4>Chefs</h4>
         </div>
-        <Button variant="contained" endIcon={<AddBoxRounded />}>
-          Add Chef
-        </Button>
+        <div className="d-flex justify-content-between">
+          <Button
+            variant="contained"
+            onClick={handleOpenadd}
+            endIcon={<AddBoxRounded />}
+          >
+            Add Chef
+          </Button>
+          {/* <Button
+            variant="contained"
+            endIcon={<BsTrashFill />}
+            className="bg-danger ms-3"
+          >
+            Delete
+          </Button> */}
+        </div>
+        <Modal
+          open={openadd}
+          onClose={handleCloseadd}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style2}>
+            <AddChef></AddChef>
+          </Box>
+        </Modal>
       </div>
       <hr />
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: 700, width: "100%" }}>
         <DataGrid
-          rows={rows}
+          rows={chefs}
           columns={columns}
+          getRowId={(row) => row.email}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          checkboxSelection
+          checkboxSelection={false}
         />
       </div>
     </div>

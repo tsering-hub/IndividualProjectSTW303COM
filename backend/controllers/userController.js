@@ -141,13 +141,16 @@ const addChefAccount = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Get Me
+// @desc Get Chef
 // @route /users/getchefs
 // @access Private
 const getChefs = asyncHandler(async (req, res) => {
-  const chefs = await User.find({
-    userType: "Chef",
-  });
+  const chefs = await User.find(
+    {
+      userType: "Chef",
+    },
+    { createdAt: 0, updatedAt: 0, userType: 0, password: 0, __v: 0, _id: 0 }
+  );
   if (chefs) {
     res.status(200).json({
       chefs: chefs,
