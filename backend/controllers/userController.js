@@ -89,10 +89,10 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route /users/addchefaccount
 // @access Private Admin
 const addChefAccount = asyncHandler(async (req, res) => {
-  const { username, name, email, password } = req.body;
+  const { username, name, email, password, contactno, gender } = req.body;
 
   // Validation
-  if (!username || !name || !email || !password) {
+  if (!username || !name || !email || !password || !contactno || !gender) {
     res.status(400);
     throw new Error("Please include all fields");
   }
@@ -126,6 +126,8 @@ const addChefAccount = asyncHandler(async (req, res) => {
     name,
     email,
     password: hashPassword,
+    contactno,
+    gender,
     userType: "Chef",
   });
 
@@ -136,6 +138,23 @@ const addChefAccount = asyncHandler(async (req, res) => {
   } else {
     res.status(400);
     throw new Error("Invalid user data");
+  }
+});
+
+// @desc Get Me
+// @route /users/getchefs
+// @access Private
+const getChefs = asyncHandler(async (req, res) => {
+  const chefs = await User.find({
+    userType: "Chef",
+  });
+  if (chefs) {
+    res.status(200).json({
+      chefs: chefs,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Can not Find Chefs");
   }
 });
 
@@ -160,4 +179,5 @@ module.exports = {
   loginUser,
   getMe,
   addChefAccount,
+  getChefs,
 };

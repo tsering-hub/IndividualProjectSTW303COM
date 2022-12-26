@@ -5,6 +5,7 @@ const {
   loginUser,
   getMe,
   addChefAccount,
+  getChefs,
 } = require("../controllers/userController");
 const auth = require("../middleware/authMiddleware");
 
@@ -12,5 +13,6 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/addchefaccount", auth.adminGuard, addChefAccount);
 router.get("/me", auth.adminGuard, getMe);
+router.get("/getchefs", auth.adminGuard, getChefs);
 
 module.exports = router;

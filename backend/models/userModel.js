@@ -23,6 +23,15 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a password"],
     },
+    contactno: {
+      type: String,
+    },
+    gender: {
+      type: String,
+    },
+    dob: {
+      type: String,
+    },
     userType: {
       type: String,
       required: true,
