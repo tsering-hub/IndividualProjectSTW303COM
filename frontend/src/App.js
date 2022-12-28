@@ -6,13 +6,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminHeader from "./components/layout/AdminHeader";
 import AdminBody from "./components/layout/AdminBody";
+import ChefHeader from "./components/layout/ChefHeader";
+import ChefBody from "./components/layout/ChefBody";
 function App() {
   var mainbody;
-  if (localStorage.getItem("userType") !== "Admin") {
+  if (localStorage.getItem("userType") === "Chef") {
     mainbody = (
       <>
-        <Header />
-        <Body />
+        <ChefHeader />
+        <ChefBody />
       </>
     );
   } else if (localStorage.getItem("userType") === "Admin") {
@@ -23,7 +25,15 @@ function App() {
         </AdminHeader>
       </>
     );
+  } else {
+    mainbody = (
+      <>
+        <Header />
+        <Body />
+      </>
+    );
   }
+
   return (
     <>
       <BrowserRouter>

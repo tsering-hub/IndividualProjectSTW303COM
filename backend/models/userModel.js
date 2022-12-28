@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
   {
-    profile_pic: {
+    profilepic: {
       type: String,
     },
     username: {
@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema(
     userType: {
       type: String,
       required: true,
-      default: "Admin",
+      default: "Customer",
     },
   },
   {

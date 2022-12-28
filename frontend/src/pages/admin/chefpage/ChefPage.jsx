@@ -17,12 +17,12 @@ const config = {
 };
 
 const columns = [
-  { field: "username", headerName: "Username", width: 130 },
-  { field: "name", headerName: "Name", width: 130 },
-  { field: "email", headerName: "Email", width: 130 },
-  { field: "contactno", headerName: "Contact Number", width: 130 },
+  { field: "username", headerName: "Username", width: 150 },
+  { field: "name", headerName: "Name", width: 150 },
+  { field: "email", headerName: "Email", width: 210 },
+  { field: "contactno", headerName: "Contact Number", width: 150 },
   { field: "gender", headerName: "Gender", width: 130 },
-  { field: "dob", headerName: "Date Of Birth", width: 130 },
+  { field: "dob", headerName: "Date Of Birth", width: 150 },
 ];
 
 const Chefpage = () => {
