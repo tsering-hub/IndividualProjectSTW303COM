@@ -5,6 +5,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
+
 // Connect to database
 connectDB();
 
@@ -23,6 +24,7 @@ app.use(
 // routes
 app.use("/users", require("./routes/userRoutes"));
 app.use("/fooditems", require("./routes/fooditemsRoutes"));
+app.use("/cart", require("./routes/cartRouter"));
 
 app.use(errorHandler);
 

@@ -12,7 +12,7 @@ module.exports.userGuard = (req, res, next) => {
         $and: [
           { _id: data.userId },
           {
-            userType: "User",
+            userType: "Customer",
           },
         ],
       })
@@ -45,6 +45,33 @@ module.exports.adminGuard = (req, res, next) => {
       })
       .then((adata) => {
         req.adminInfo = adata;
+        next();
+      })
+      .catch((e) => {
+        res.json({ msg: "Invalid Token" });
+      });
+  } catch (e) {
+    res.json({ msg: "Invalid Token" });
+  }
+};
+
+// This Is Guard For Chef...
+module.exports.chefGuard = (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(data);
+    user
+      .findOne({
+        $and: [
+          { _id: data.userId },
+          {
+            userType: "Chef",
+          },
+        ],
+      })
+      .then((adata) => {
+        req.chefInfo = adata;
         next();
       })
       .catch((e) => {
