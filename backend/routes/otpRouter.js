@@ -19,7 +19,7 @@ router.post("/otp-send", async (req, res) => {
     });
     let otpResponse = await otpData.save();
 
-    responseType.statusText = "Success";
+    responseType.success = true;
     responseType.message = "Please check Your Email";
 
     // mail sending to emailId
@@ -50,7 +50,7 @@ router.post("/otp-send", async (req, res) => {
 
     transporter.close();
   } else {
-    responseType.statusText = "Failed";
+    responseType.success = false;
     responseType.message = "Email is not registerd";
   }
   res.status(200).json(responseType);
@@ -66,7 +66,7 @@ router.put("/reset-password", async (req, res) => {
     let diff = data.expireIn - currentTime;
     if (diff < 0) {
       response.message = "OTP Code Expire";
-      response.success = "Failed";
+      response.success = false;
     } else {
       let user = await User.findOne({
         email: req.body.email,
@@ -76,13 +76,14 @@ router.put("/reset-password", async (req, res) => {
         user.save();
       });
       response.message = "Password Changed Successfully";
-      response.success = "Success";
+      response.success = true;
+      res.status(201).json(response);
     }
   } else {
     response.message = "Wrong OTP Code";
-    response.success = "Error";
+    response.success = false;
+    res.status(200).json(response);
   }
-  res.status(200).json(response);
 });
 
 module.exports = router;

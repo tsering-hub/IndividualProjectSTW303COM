@@ -25,6 +25,8 @@ app.use(
 app.use("/users", require("./routes/userRoutes"));
 app.use("/fooditems", require("./routes/fooditemsRoutes"));
 app.use("/cart", require("./routes/cartRouter"));
+app.use("/order", require("./routes/orderRouter"));
+app.use(require("./routes/otpRouter"));
 
 app.use(errorHandler);
 
