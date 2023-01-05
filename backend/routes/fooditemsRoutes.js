@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   addFooditems,
   GetFooditemsByAdmin,
+  GetFooditems,
   updateFooditems,
   deleteFooditem,
 } = require("../controllers/fooditemsController");
@@ -17,7 +18,7 @@ router.post(
 );
 
 router.get("/getbyadmin", auth.adminGuard, GetFooditemsByAdmin);
-
+router.get("/get", GetFooditems);
 router.put(
   "/update",
   auth.adminGuard,

@@ -67,6 +67,22 @@ const GetFooditemsByAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get Food items
+// @route /fooditems/getbyadmin
+// @access Public
+const GetFooditems = asyncHandler(async (req, res) => {
+  const foods = await Fooditems.find();
+  if (foods) {
+    res.status(200).json({
+      success: true,
+      data: foods,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Food not Found");
+  }
+});
+
 // @desc Updating Food Item
 // @route /fooditems/update
 // @access Private Admin
@@ -141,6 +157,7 @@ const deleteFooditem = asyncHandler(async (req, res) => {
 module.exports = {
   addFooditems,
   GetFooditemsByAdmin,
+  GetFooditems,
   updateFooditems,
   deleteFooditem,
 };
