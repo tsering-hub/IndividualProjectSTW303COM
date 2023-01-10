@@ -7,6 +7,9 @@ const {
   addChefAccount,
   getChefs,
   getMyselfCustomer,
+  updateProfile,
+  updateProfilePic,
+  changePassword,
 } = require("../controllers/userController");
 const auth = require("../middleware/authMiddleware");
 
@@ -16,4 +19,7 @@ router.post("/addchefaccount", auth.adminGuard, addChefAccount);
 router.get("/me", auth.adminGuard, getMe);
 router.get("/getchefs", auth.adminGuard, getChefs);
 router.get("/myselfcustomer", auth.userGuard, getMyselfCustomer);
+router.get("/profileupdate", auth.userGuard, updateProfile);
+router.get("/profilepicupdate", auth.userGuard, updateProfilePic);
+router.get("/changepassword", auth.userGuard, changePassword);
 module.exports = router;

@@ -188,6 +188,94 @@ const getMyselfCustomer = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc update profile
+// @route /users/profileupdate
+// @access Private Customer
+const updateProfile = asyncHandler(async (req, res) => {
+  if (req.file == undefined) {
+    res.status(400);
+    throw new Error("Invalid file formate");
+  }
+
+  const user = await User.updateOne(
+    { _id: req.userInfo._id },
+    {
+      profilepic: req.file.filename,
+    }
+  );
+  if (user) {
+    res.status(201).json({
+      success: true,
+      msg: "updated",
+    });
+  } else {
+    res.status(400);
+    throw new Error("Failed to update");
+  }
+});
+
+// @desc update profilepic
+// @route /users/profilepicupdate
+// @access Private Customer
+const updateProfilePic = asyncHandler(async (req, res) => {
+  const user = await User.updateOne(
+    { _id: req.userInfo._id },
+    {
+      name: req.body.name,
+      contactno: req.body.contactno,
+      gender: req.body.gender,
+      dob: req.body.dob,
+    }
+  );
+  if (user) {
+    res.status(201).json({
+      success: true,
+      msg: "updated",
+    });
+  } else {
+    res.status(400);
+    throw new Error("Failed to update");
+  }
+});
+
+// @desc change password
+// @route /users/changepassword
+// @access Private Customer
+const changePassword = asyncHandler(async (req, res) => {
+  const { oldpassword, newpassword } = req.body;
+
+  // Validation
+  if (!oldpassword || !newpassword) {
+    res.status(400);
+    throw new Error("Please include all fields");
+  }
+
+  const user = await User.findOne({ _id: req.userInfo._id });
+  if (user) {
+    bcryptjs.compare(oldpassword, user.password, (e, result) => {
+      if (result == false) {
+        res.status(201).json({
+          success: false,
+          msg: "Incorrect password",
+        });
+        return;
+      }
+
+      bcryptjs.hash(newpassword, 10, (e, hashed_pw) => {
+        user.password = hashed_pw;
+        user.save();
+        res.status(201).json({
+          success: true,
+          msg: "Password Changed Successfully",
+        });
+      });
+    });
+  } else {
+    res.status(400);
+    throw new Error("Failed to update");
+  }
+});
+
 // Generate token
 const generateToken = (id) => {
   return jwt.sign({ userId: id }, process.env.JWT_SECRET, {
@@ -202,4 +290,7 @@ module.exports = {
   addChefAccount,
   getChefs,
   getMyselfCustomer,
+  updateProfile,
+  updateProfilePic,
+  changePassword,
 };
