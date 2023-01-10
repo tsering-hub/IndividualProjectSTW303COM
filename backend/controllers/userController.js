@@ -188,10 +188,10 @@ const getMyselfCustomer = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc update profile
-// @route /users/profileupdate
+// @desc update profilepic
+// @route /users/profilepicupdate
 // @access Private Customer
-const updateProfile = asyncHandler(async (req, res) => {
+const updateProfilePic = asyncHandler(async (req, res) => {
   if (req.file == undefined) {
     res.status(400);
     throw new Error("Invalid file formate");
@@ -214,10 +214,10 @@ const updateProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc update profilepic
-// @route /users/profilepicupdate
+// @desc update profile
+// @route /users/profileupdate
 // @access Private Customer
-const updateProfilePic = asyncHandler(async (req, res) => {
+const updateProfile = asyncHandler(async (req, res) => {
   const user = await User.updateOne(
     { _id: req.userInfo._id },
     {
@@ -254,7 +254,7 @@ const changePassword = asyncHandler(async (req, res) => {
   if (user) {
     bcryptjs.compare(oldpassword, user.password, (e, result) => {
       if (result == false) {
-        res.status(201).json({
+        res.json({
           success: false,
           msg: "Incorrect password",
         });
