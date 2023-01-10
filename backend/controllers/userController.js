@@ -170,6 +170,24 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc Get Me
+// @route /users/myselfcustomer
+// @access Private Customer
+const getMyselfCustomer = asyncHandler(async (req, res) => {
+  const user = await User.findOne({
+    _id: req.userInfo._id,
+  });
+  if (user) {
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Can not Find your account");
+  }
+});
+
 // Generate token
 const generateToken = (id) => {
   return jwt.sign({ userId: id }, process.env.JWT_SECRET, {
@@ -183,4 +201,5 @@ module.exports = {
   getMe,
   addChefAccount,
   getChefs,
+  getMyselfCustomer,
 };

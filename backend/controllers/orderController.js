@@ -10,25 +10,17 @@ const addorder = asyncHandler(async (req, res) => {
     orderItems: req.body.orderItems.map((x) => ({ ...x })),
     totalprice: req.body.totalprice,
     totalpreparingtime: req.body.totalpreparingtime,
-    orderstatus: "Requested",
+    orderstatus: "Pending",
     paymentmethod: req.body.paymentmethod,
     paymentstatus: req.body.paymentstatus,
     tablenumber: req.body.tablenumber,
-    userId: req.patientInfo._id,
+    userId: req.userInfo._id,
   });
 
   if (order) {
-    const cartdelete = await Cart.deleteMany({
-      userId: req.userInfo._id,
+    res.status(201).json({
+      msg: "Order successfully",
     });
-    if (cartdelete) {
-      res.status(201).json({
-        msg: "Order successfully",
-      });
-    } else {
-      res.status(400);
-      throw new Error("Something Went Wrong, Please Try Again!!!");
-    }
   } else {
     res.status(400);
     throw new Error("Failed to order");
@@ -85,8 +77,36 @@ const getmyorders = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get all Orders of customer
+// @route /order/getmypendingorders
+// @access Private Customer
+const getmypendingorders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({
+    $and: [{ orderstatus: "Pending" }, { userId: req.userInfo._id }],
+  })
+    .sort({
+      createdAt: "desc",
+    })
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "foodId",
+      },
+    });
+  if (orders) {
+    res.status(200).json({
+      success: true,
+      data: orders,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Order not Found");
+  }
+});
+
 module.exports = {
   addorder,
   getallOrder,
   getmyorders,
+  getmypendingorders,
 };
