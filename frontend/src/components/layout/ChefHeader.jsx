@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./chefheader.css";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -61,7 +62,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const pages = ["Dashboard", "Order", "Blog"];
 const settings = ["Profile", "History", "Settings", "Logout"];
 
 const ChefHeader = () => {
@@ -98,18 +98,6 @@ const ChefHeader = () => {
           <Typography variant="h6" noWrap component="a" href="/">
             <img src={logo} alt="logo" className="logo" />
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

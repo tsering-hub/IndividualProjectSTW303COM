@@ -35,12 +35,43 @@ const getallOrder = asyncHandler(async (req, res) => {
     .sort({
       createdAt: "desc",
     })
+    .populate("userId")
     .populate({
       path: "orderItems",
       populate: {
         path: "foodId",
       },
     });
+
+  if (orders) {
+    res.status(200).json({
+      success: true,
+      data: orders,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Order not Found");
+  }
+});
+
+// @desc Get all Orders items
+// @route /order/getallpendingOrder
+// @access Private admin
+const getallpendingOrder = asyncHandler(async (req, res) => {
+  const orders = await Order.find({
+    orderstatus: "Pending",
+  })
+    .sort({
+      createdAt: "desc",
+    })
+    .populate("userId")
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "foodId",
+      },
+    });
+
   if (orders) {
     res.status(200).json({
       success: true,
@@ -104,9 +135,34 @@ const getmypendingorders = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Updating Food Item
+// @route /order/update
+// @access Private Chef
+const updateOrderStatus = asyncHandler(async (req, res) => {
+  const { id, orderstatus } = req.body;
+
+  const order = await Order.updateOne(
+    { _id: id },
+    {
+      orderstatus: orderstatus,
+    }
+  );
+
+  if (order !== null) {
+    res.status(201).json({
+      msg: "Order Updated successfully",
+    });
+  } else {
+    res.status(400);
+    throw new Error("Order not Updated");
+  }
+});
+
 module.exports = {
   addorder,
   getallOrder,
   getmyorders,
   getmypendingorders,
+  getallpendingOrder,
+  updateOrderStatus,
 };

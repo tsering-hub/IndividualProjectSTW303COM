@@ -89,16 +89,6 @@ const GetFooditems = asyncHandler(async (req, res) => {
 const updateFooditems = asyncHandler(async (req, res) => {
   const { id, name, desc, category, preparingtime, price, stock } = req.body;
 
-  // find if food item already exists
-  const foodExists = await Fooditems.findOne({
-    name,
-  });
-
-  if (foodExists) {
-    res.status(400);
-    throw new Error("Food Item already exists");
-  }
-
   var food;
   // Update Food Item
   if (req.file == undefined) {

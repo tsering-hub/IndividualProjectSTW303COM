@@ -1,25 +1,34 @@
 import React from "react";
 import "./dashboardchef.scss";
+import { Outlet } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import ChefDashboardCard from "../../../components/chefdashboardCard/ChefDashboardCard";
 import ChefDashboardOrderTable from "../../../components/chefdashboardordertable/ChefDashboardOrderTable";
+import { Link, NavLink } from "react-router-dom";
 const DashboardChef = () => {
   return (
     <div className="dashboardchef-container">
-      <h3>
-        <RxDashboard></RxDashboard> Dashboard
-      </h3>
-      <hr />
-      <div className="d-flex justify-content-center">
-        <ChefDashboardCard></ChefDashboardCard>
-        <ChefDashboardCard></ChefDashboardCard>
-        <ChefDashboardCard></ChefDashboardCard>
-        <ChefDashboardCard></ChefDashboardCard>
+      <div className="d-flex justify-content-evenly dash-nav">
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "dashnav-link dashnavactive" : "dashnav-link"
+          }
+          to=""
+        >
+          Requested Order
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "dashnav-link dashnavactive" : "dashnav-link"
+          }
+          to="orderhistory"
+        >
+          Order History
+        </NavLink>
       </div>
-      <h4 className="mt-4">Recent Orders</h4>
       <hr />
       <div>
-        <ChefDashboardOrderTable></ChefDashboardOrderTable>
+        <Outlet />
       </div>
     </div>
   );
