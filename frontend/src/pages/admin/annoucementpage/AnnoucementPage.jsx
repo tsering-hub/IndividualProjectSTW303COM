@@ -23,6 +23,7 @@ import UpdateFood from "../../../components/updatefood/UpdateFood";
 import { toast } from "react-toastify";
 import { FaRegCommentAlt } from "react-icons/fa";
 import AddAnnouncement from "../../../components/addanouncement/AddAnnouncement";
+import UpdateAnnouncement from "../../../components/updateannouncement/UpdateAnnouncement";
 
 const config = {
   headers: {
@@ -31,7 +32,7 @@ const config = {
 };
 
 const AnnouncementPage = () => {
-  const [foods, setFoods] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
   const [view, setView] = React.useState(false);
   const handleOpen = () => setView(true);
   const handleClose = () => setView(false);
@@ -70,16 +71,16 @@ const AnnouncementPage = () => {
   };
 
   useEffect(() => {
-    axios.get("/fooditems/getbyadmin", config).then((res) => {
+    axios.get("/announcement/get", config).then((res) => {
       console.log(res.data);
-      setFoods(res.data.data);
+      setAnnouncements(res.data.data);
     });
   }, []);
 
-  const deleteFood = (id, e) => {
+  const deleteAnnouncement = (id, e) => {
     e.preventDefault();
     axios
-      .delete(`http://localhost:5000/fooditems/delete/${id}`, config)
+      .delete(`http://localhost:5000/announcement/delete/${id}`, config)
       .then((result) => {
         console.log(result);
         if (result.status === 200) {
@@ -146,14 +147,14 @@ const AnnouncementPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {foods.map((row) => (
+            {announcements.map((row) => (
               <TableRow
                 key={row._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{row.name}</TableCell>
+                <TableCell align="center">{row.title}</TableCell>
 
-                <TableCell align="center">{row.stock}</TableCell>
+                <TableCell align="center">{row.announcement}</TableCell>
                 <TableCell align="center">
                   <div className="d-flex flex-column align-items-center justify-content-center">
                     <button
@@ -169,7 +170,9 @@ const AnnouncementPage = () => {
                       aria-describedby="modal-modal-description"
                     >
                       <Box sx={style2}>
-                        <UpdateFood food={row}></UpdateFood>
+                        <UpdateAnnouncement
+                          announcements={row}
+                        ></UpdateAnnouncement>
                       </Box>
                     </Modal>
                     <button onClick={handleOpen} className="delete--btn m-2">
@@ -187,13 +190,13 @@ const AnnouncementPage = () => {
                           variant="h6"
                           component="h2"
                         >
-                          Are you sure you want to delete this food item?
+                          Are you sure you want to delete this Announcement?
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                           <div className="d-flex align-items-center ">
                             <button
                               className="update--btn"
-                              onClick={(e) => deleteFood(row._id, e)}
+                              onClick={(e) => deleteAnnouncement(row._id, e)}
                               data-test="yes-btn"
                             >
                               Yes &nbsp; <BsCheckLg />

@@ -9,6 +9,7 @@ import {
   FaCommentAlt,
   FaShoppingBag,
   FaThList,
+  FaBell,
 } from "react-icons/fa";
 import { MdFastfood } from "react-icons/md";
 import { ImExit } from "react-icons/im";
@@ -46,7 +47,7 @@ const AdminHeader = ({ children }) => {
     {
       path: "/notification",
       name: "Notification",
-      icon: <FaShoppingBag />,
+      icon: <FaBell />,
     },
   ];
 
