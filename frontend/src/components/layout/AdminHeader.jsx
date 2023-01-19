@@ -35,7 +35,7 @@ const AdminHeader = ({ children }) => {
       icon: <FaUserAlt />,
     },
     {
-      path: "/analytics",
+      path: "/Analytics",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
