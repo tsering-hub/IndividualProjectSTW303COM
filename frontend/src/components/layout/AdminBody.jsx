@@ -6,6 +6,7 @@ import Register from "../register/Register";
 import DashboardAdmin from "../../pages/admin/dashboard-admin/DashboardAdmin";
 import FoodItems from "../../pages/admin/fooditems-admin/FoodItems";
 import Chefpage from "../../pages/admin/chefpage/ChefPage";
+import AnnouncementPage from "../../pages/admin/annoucementpage/AnnoucementPage";
 
 const AdminBody = () => {
   return (
@@ -14,6 +15,7 @@ const AdminBody = () => {
         <Route path="/" element={<DashboardAdmin />} />
         <Route path="/fooditems" element={<FoodItems />} />
         <Route path="/chefpage" element={<Chefpage />} />
+        <Route path="/announcement" element={<AnnouncementPage />} />
       </Routes>
     </>
   );
