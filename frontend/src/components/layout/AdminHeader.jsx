@@ -39,19 +39,14 @@ const AdminHeader = ({ children }) => {
       icon: <FaRegChartBar />,
     },
     {
-      path: "/comment",
-      name: "Comment",
+      path: "/announcement",
+      name: "Announcement",
       icon: <FaCommentAlt />,
     },
     {
-      path: "/product",
-      name: "Product",
+      path: "/notification",
+      name: "Notification",
       icon: <FaShoppingBag />,
-    },
-    {
-      path: "/productList",
-      name: "Product List",
-      icon: <FaThList />,
     },
   ];
 
