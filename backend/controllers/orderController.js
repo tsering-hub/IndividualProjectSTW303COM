@@ -59,7 +59,14 @@ const getallOrder = asyncHandler(async (req, res) => {
 // @access Private admin
 const getallpendingOrder = asyncHandler(async (req, res) => {
   const orders = await Order.find({
-    orderstatus: "Pending",
+    $or: [
+      {
+        orderstatus: "Pending",
+      },
+      {
+        orderstatus: "Preparing",
+      },
+    ],
   })
     .sort({
       createdAt: "desc",
@@ -150,6 +157,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
 
   if (order !== null) {
     res.status(201).json({
+      success: true,
       msg: "Order Updated successfully",
     });
   } else {

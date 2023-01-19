@@ -15,6 +15,6 @@ router.get("/getall", auth.chefGuard, getallOrder);
 router.get("/getallpendingOrder", auth.chefGuard, getallpendingOrder);
 router.get("/getmyorders", auth.userGuard, getmyorders);
 router.get("/getmypendingorders", auth.userGuard, getmypendingorders);
-router.put("/update", auth.userGuard, updateOrderStatus);
+router.put("/update", auth.chefGuard, updateOrderStatus);
 
 module.exports = router;
