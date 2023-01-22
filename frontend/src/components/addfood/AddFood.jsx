@@ -105,9 +105,7 @@ const AddFood = () => {
       .post("/fooditems/add", data, config)
       .then((res) => {
         if (res.status === 201) {
-          console.log("Book Added Successfully");
-
-          toast.success("Book Added Successfully", {
+          toast.success("Food Added Successfully", {
             position: "top-center",
             autoClose: 4000,
           });
@@ -247,7 +245,7 @@ const AddFood = () => {
             onClick={addFood}
             data-test="add-btn"
           >
-            Add a Book
+            Add Food Item
           </Button>
         </div>
       </Box>

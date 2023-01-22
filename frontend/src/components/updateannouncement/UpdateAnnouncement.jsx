@@ -1,43 +1,20 @@
 import React from "react";
 import "./updateannouncement.scss";
 import Box from "@mui/material/Box";
-import { Theme, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
+
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import {
-  Button,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-} from "@mui/material";
+import { Button } from "@mui/material";
 
 import { toast } from "react-toastify";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
-function getStyles(name, categoryName, theme) {
-  return {
-    fontWeight:
-      categoryName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 const config = {
   headers: {
     Authorization: "Bearer " + localStorage.getItem("token"),
@@ -45,8 +22,6 @@ const config = {
 };
 
 const UpdateAnnouncement = ({ announcements }) => {
-  const theme = useTheme();
-
   const [title, setTitle] = useState(announcements.title);
   const [announcement, setAnnouncement] = useState(announcements.announcement);
 

@@ -1,16 +1,15 @@
 import React from "react";
 import "./addchef.scss";
 import Box from "@mui/material/Box";
-import { Theme, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import {
   Button,
-  InputAdornment,
   InputLabel,
   MenuItem,
   OutlinedInput,

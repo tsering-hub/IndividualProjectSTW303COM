@@ -4,12 +4,20 @@ import DashboardChef from "../../pages/cheff/dashboard-chef/DashboardChef";
 import OrderHistory from "../orderhistory/OrderHistory";
 import RequestedOrder from "../requestedorder/RequestedOrder";
 import "./chefbody.scss";
+import PrivateRoute from "../../ProtectedRoute";
 const ChefBody = () => {
   return (
     <>
       <div className="chefbody-container">
         <Routes>
-          <Route path="/" element={<DashboardChef />}>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <DashboardChef />
+              </PrivateRoute>
+            }
+          >
             <Route path="" element={<RequestedOrder />} />
             <Route path="orderhistory" element={<OrderHistory />} />
           </Route>

@@ -1,12 +1,12 @@
 import React from "react";
 import "./updatefood.scss";
 import Box from "@mui/material/Box";
-import { Theme, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import {
   Button,
@@ -106,9 +106,7 @@ const UpdateFood = ({ food }) => {
       .put("/fooditems/update", data, config)
       .then((res) => {
         if (res.status === 201) {
-          console.log("Book Updated Successfully");
-
-          toast.success("Book Updated Successfully", {
+          toast.success("Food Updated Successfully", {
             position: "top-center",
             autoClose: 4000,
           });
