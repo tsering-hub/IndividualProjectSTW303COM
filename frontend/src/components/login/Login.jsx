@@ -70,7 +70,7 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login">
-          <h2 className="login-heading">Login to Majestry Eatry</h2>
+          <h2 className="login-heading">Login to Majesty Eatry</h2>
           <form className="login_form">
             <FormControl sx={{ my: 2, width: "100%" }} variant="filled">
               <InputLabel htmlFor="filled-adornment-password">Email</InputLabel>
